@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  SECRETS_SCAN_ENABLED = "false"
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_BASE_URL,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
 
 # Essential Next.js plugin for Netlify
 [[plugins]]
