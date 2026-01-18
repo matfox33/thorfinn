@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --neon-blue: #00d4ff;
+  --neon-purple: #a855f7;
+  --neon-pink: #ec4899;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  background: radial-gradient(ellipse at top, #0a0a0a 0%, #000000 100%);
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(to right, #00d4ff, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .neon-text {
+    text-shadow:
+      0 0 10px rgba(0, 212, 255, 0.8),
+      0 0 20px rgba(0, 212, 255, 0.6),
+      0 0 30px rgba(0, 212, 255, 0.4);
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .neon-border {
+    box-shadow:
+      0 0 10px rgba(0, 212, 255, 0.5),
+      inset 0 0 10px rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+  }
+
+  .neon-button {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    box-shadow:
+      0 0 15px rgba(0, 212, 255, 0.3),
+      inset 0 0 15px rgba(0, 212, 255, 0.1);
+  }
+
+  .neon-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 25px rgba(0, 212, 255, 0.6),
+      inset 0 0 20px rgba(0, 212, 255, 0.2),
+      0 10px 40px rgba(0, 212, 255, 0.2);
+  }
+
+  .card-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 212, 255, 0.03),
+      rgba(168, 85, 247, 0.03)
+    );
+    backdrop-filter: blur(10px);
+  }
+
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
