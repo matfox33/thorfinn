@@ -112,11 +112,19 @@ exports.handler = async (event) => {
   }
 
   try {
+    // Log environment check
+    console.log('🔍 Environment check:');
+    console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
+    console.log('STRIPE_SECRET_KEY starts with:', process.env.STRIPE_SECRET_KEY?.substring(0, 7));
+    console.log('NEXT_PUBLIC_BASE_URL:', process.env.NEXT_PUBLIC_BASE_URL);
+
     const { productId } = JSON.parse(event.body);
+    console.log('📦 Product ID requested:', productId);
 
     // Find product
     const product = products.find(p => p.id === productId);
     if (!product) {
+      console.log('❌ Product not found:', productId);
       return {
         statusCode: 404,
         headers,
@@ -124,7 +132,10 @@ exports.handler = async (event) => {
       };
     }
 
+    console.log('✅ Product found:', product.name, 'Price:', product.price);
+
     // Create Stripe checkout session
+    console.log('🔄 Creating Stripe session...');
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -172,12 +183,17 @@ exports.handler = async (event) => {
     };
   } catch (error) {
     console.error('❌ Stripe error:', error.message);
+    console.error('❌ Full error:', error);
+    console.error('❌ Error type:', error.type);
+    console.error('❌ Error code:', error.code);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         error: 'Failed to create checkout session',
-        details: error.message
+        details: error.message,
+        type: error.type,
+        code: error.code
       })
     };
   }
