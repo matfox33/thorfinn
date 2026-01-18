@@ -134,13 +134,20 @@ exports.handler = async (event) => {
 
     console.log('✅ Product found:', product.name, 'Price:', product.price);
 
+    // Ensure base URL has protocol
+    let baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://wayneresselz.netlify.app';
+    if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+      baseUrl = `https://${baseUrl}`;
+    }
+    console.log('🌐 Base URL:', baseUrl);
+
     // Create Stripe checkout session
     console.log('🔄 Creating Stripe session...');
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://wayne-resselz.netlify.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://wayne-resselz.netlify.app'}/`,
+      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/`,
       metadata: {
         productId: product.id,
         productName: product.name,
